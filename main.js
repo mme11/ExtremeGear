@@ -1,15 +1,19 @@
+
 var cvs = document.getElementById("canvas");
 var ctx = cvs.getContext("2d");
+
 
 var car= new Image();
 var track= new Image();
 
-car.src="https://opengameart.org/sites/default/files/preview_344.png";
-track.src="https://duskfire.files.wordpress.com/2011/08/pyracerz.png";
+car.src = "images/car.png";
+track.src="images/track.png"
 
-function Draw()
+
+function draw()
 {
-    ctx.drawImage(track,0,0);
+    ctx.drawImage(track,0,0); 
+    requestAnimationFrame(draw); 
 
 }
 
