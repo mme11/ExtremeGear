@@ -12,7 +12,8 @@ track.src="images/track.png"
 
 function draw()
 {
-    ctx.drawImage(track,0,0); 
+    ctx.drawImage(images/track.png,0,0); 
+    //ctx.drawImage(car,500,40,50,50);
     requestAnimationFrame(draw); 
 
 }
