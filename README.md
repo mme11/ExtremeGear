@@ -1,2 +1,0 @@
-# ExtremeGear
-Racing Game.
