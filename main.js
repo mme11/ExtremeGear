@@ -126,10 +126,10 @@ track.src="images/newtrack.png";
         ctx.clearRect(xpos,ypos,50,50);
         if(myRaceArea.keys)
         {
-            if (myRaceArea.keys[37]) {moveAngle = 1; }
-            if (myRaceArea.keys[39]) {moveAngle = -1; }
-            if (myRaceArea.keys[38]) {speed= 1; }
-            if (myRaceArea.keys[40]) {speed= -1; }
+            if (myRaceArea.keys[37]) {moveAngle = 2; }
+            if (myRaceArea.keys[39]) {moveAngle = -2; }
+            if (myRaceArea.keys[38]) {speed= 2; }
+            if (myRaceArea.keys[40]) {speed= -2; }
             
         }
         
@@ -156,19 +156,16 @@ track.src="images/newtrack.png";
       
         //saves current state of canvas and then draws the sprite in the updated position
         function update(){
+            ctx.drawImage(track,-3700,-3700,10900,10900);
             ctx.save();
             ctx.translate(xpos,ypos);
             ctx.rotate(angle);
-            ctx.drawImage(RaceCar, -15 ,-15 , 50, 50);
-    
+            ctx.drawImage(RaceCar, -15 , -15 , 50, 50);
+           
             ctx.restore(); 
             }
 
         
 
 
-    //race= new Cars();
-    //race.draw();
-    draw();
-    //setInterval(draw,100);
-   //document.onkeyup= upkey;
+   
