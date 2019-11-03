@@ -68,22 +68,20 @@ function car(width, height, color, x, y, type) {
     //Movement and speed
     this.newPos = function() {
         this.angle += this.moveAngle * Math.PI / 180;
-        this.x += this.speed * Math.sin(this.angle)+this.acceleration-this.friction;
-        this.y -= this.speed * Math.cos(this.angle)+this.acceleration-this.friction;
+        this.x += this.speed * Math.sin(this.angle);
+        this.y -= this.speed * Math.cos(this.angle);
     }
 }
 
 // Block moving
 function updateRaceArea() {
     myRaceArea.clear();
-    RaceCar.acceleration=0.5
-    RaceCar.friction=-0.5
     RaceCar.moveAngle = 0;
     RaceCar.speed = 0;
-    if (myRaceArea.keys && myRaceArea.keys[37]) {RaceCar.moveAngle = -2; }
-    if (myRaceArea.keys && myRaceArea.keys[39]) {RaceCar.moveAngle = 2; }
-    if (myRaceArea.keys && myRaceArea.keys[38]) {RaceCar.speed= 3; }
-    if (myRaceArea.keys && myRaceArea.keys[40]) {RaceCar.speed= -3; }
+    if (myRaceArea.keys && myRaceArea.keys[37]) {RaceCar.moveAngle = -2 };
+    if (myRaceArea.keys && myRaceArea.keys[39]) {RaceCar.moveAngle = 2 };
+    if (myRaceArea.keys && myRaceArea.keys[38]) {RaceCar.speed= 3 };
+    if (myRaceArea.keys && myRaceArea.keys[40]) {RaceCar.speed= -3 };
     //gives new position of car and updates on canvas
     RaceCar.newPos();
     RaceCar.update();
