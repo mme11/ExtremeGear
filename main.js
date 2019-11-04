@@ -13,7 +13,10 @@ var cameraspeed=0;
 var dest_width,dest_height;
 //var trackx=-3700;
 //var tracky=-3700;
-
+var dx = 2;
+var dy = -2;
+var barx = cvs.width/2;
+var  bary= cvs.height-30;
 var speed = 0;
 var angle=0;
 var moveAngle=0;
