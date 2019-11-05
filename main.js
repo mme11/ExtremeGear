@@ -144,8 +144,10 @@ track.src="images/newtrack.png";
 
         if(myRaceArea.keys)
         {
-            if (myRaceArea.keys[37]) {moveAngle = 2; }
-            if (myRaceArea.keys[39]) {moveAngle = -2; }
+            if (myRaceArea.keys[37]) 
+                {moveAngle = 2; }
+            if (myRaceArea.keys[39]) 
+                {moveAngle = -2; }
             if (myRaceArea.keys[40]) 
                 {cameraspeed= 10;
                 speed= 5; }
@@ -172,10 +174,10 @@ track.src="images/newtrack.png";
             if (xpos < 500 || xpos > 500) 
                 xpos = 500; //500 is the starting point of the car 
         
-            if (ypos< boundary) 
-                ypos= boundary;//40 is the starting ypos of the car
+            if (ypos< 40) 
+                ypos= 40;//40 is the starting ypos of the car
 
-            if(ypos > 500 || ypos < 500)
+                if(ypos > 500 || ypos < 500)
                 ypos = 200;
         
             if (xpos > room_width-500) 
@@ -185,8 +187,8 @@ track.src="images/newtrack.png";
                 ypos = room_height-40;
 
 
-           // xpos=xpos-room_xview/2;
-           // ypos=ypos-room_yview/2;
+            //xpos=xpos-room_xview/2;
+            //ypos=ypos-room_yview/2;
 
         }
         
