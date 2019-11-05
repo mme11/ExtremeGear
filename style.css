@@ -8,14 +8,20 @@
    
     margin: 0 !important;
     padding: 0 !important;
-    
 }
 
 #gameName
 {   
-    font-family: Gill Sans, serif;
-    color: blue;
+    font-family: fantasy;
+    color: rgb(3, 68, 187);
     font-weight: bold;
-    font-variant: small-caps;
+    position: absolute;
+    font-size: xx-large;
+    text-align: center;
 
+}
+
+#Stats
+{
+    position: absolute;
 }
