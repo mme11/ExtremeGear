@@ -1,4 +1,5 @@
-
+var score= $("#score");
+var score_counter=1;
 var cvs = document.getElementById('canvas');
 var ctx= cvs.getContext("2d");
 
@@ -56,6 +57,7 @@ track.src="images/newtrack.png";
             speed=0;
             cameraspeed=0;
             moveAngle=0;
+            
         })
     },
 
@@ -143,16 +145,21 @@ track.src="images/newtrack.png";
         ctx.clearRect(xpos,ypos,50,50);
 
         if(myRaceArea.keys)
-        {
+        {   
+            
             if (myRaceArea.keys[37]) 
-                {moveAngle = 2; }
+                {moveAngle = 2; 
+                updateScore();}
             if (myRaceArea.keys[39]) 
-                {moveAngle = -2; }
+                {moveAngle = -2;
+                updateScore(); }
             if (myRaceArea.keys[40]) 
-                {cameraspeed= 10;
+                {cameraspeed= 10
+                updateScore();
                 speed= 5; }
             if (myRaceArea.keys[38])
                  {cameraspeed= -10;
+                 updateScore();
                  speed= -5; }
             
         }
@@ -170,6 +177,8 @@ track.src="images/newtrack.png";
             ypos -= speed * Math.cos(angle);
             room_xview-= cameraspeed* Math.sin(angle);
             room_yview+=cameraspeed* Math.cos(angle);
+
+            
             
             if (xpos < 500 || xpos > 500) 
                 xpos = 500; //500 is the starting point of the car 
@@ -195,6 +204,7 @@ track.src="images/newtrack.png";
       
         //saves current state of canvas and then draws the sprite in the updated position
         function update(){
+            
             dest_width=room_width;
             dest_height=room_height;
             //ctx.drawImage(track,room_xview,room_yview,room_width,room_height,dest_xview,dest_yview,dest_width,dest_height);
@@ -210,6 +220,12 @@ track.src="images/newtrack.png";
             ctx.restore(); 
             
             }
+
+            function updateScore(){
+                score_counter++;
+                if(score_counter%15==0)
+                    score.text(parseInt(score.text())+1)
+            } 
 
             /*function update(){
                 dest_width=room_width;

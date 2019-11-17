@@ -4,6 +4,62 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http,{}); 
 const mysql = require('mysql');
 
+var users={
+    'hello':'user1',
+    'hello2':'user2',
+    'hello3':'user3'
+}
+
+var isValidPassword = function(data){
+    return users[data.username]=== data.password;
+}
+
+var isUsernameTaken = function(data){
+    return users[data.username];
+}
+
+var addUser = function(data){
+    users[data.username]=data.password;
+}
+
+let clients=0;
+io.sockets.on('connection',function(socket){
+
+    socket.on('signIn',function(data){
+        if(isValidPassword(data))
+        {
+            socket.id=Math.random();
+            socket_list[socket.id]=socket;
+                
+            var player = players(socket.id);
+            player_list[socket.id]=player;
+                
+            clients++;
+
+            socket.emit('signInResponse',{success:true});
+        }
+        else
+        {
+            socket.emit('signInResponse',{success:false});
+        }
+          
+    });
+
+    socket.on('signUp',function(data){
+        if(isUsernameTaken(data)){
+            socket.emit('signUpResponse',{success:false});
+        }
+        else{
+            addUser(data);
+            socket.emit('signUpResponse',{success:true});
+        }
+    });
+
+    socket.on('disconnect',function(){
+        delete socket_list[socket.id];
+        delete player_list[socket.id];
+    });
+});
 
 const db=mysql.createConnection({
     host     :'localhost',
@@ -16,8 +72,8 @@ db.connect(function(err){
     if(err){
         throw err;
     }
-    console.log("MySQL connected")
-})
+    console.log("MySQL connected");
+});
 
 app.get('/createdb',function(req,res){
     let sql='create database nodemysql';
@@ -31,7 +87,7 @@ app.get('/createdb',function(req,res){
 });
 
 app.get('/createtable',function(req,res){
-    let sql='CREATE TABLE webProgTable(id int AUTO_INCREMENT , title varchar(200), body varchar(250), PRIMARY KEY (id))';
+    let sql='CREATE TABLE webProgTable(id int AUTO_INCREMENT , username varchar(200), password varchar(250),score int, position int, PRIMARY KEY (id))';
     db.query(sql,function(err,result){
         if(err){
             throw err;
@@ -89,7 +145,7 @@ app.get('/select1/:id',function(req,res){
 
 app.get('/update/:id',function(req,res){
     let newT="updated title";
-    let sql=`update webprogtable set title='${newT}' where id= ${request.params.id}`;
+    let sql=`update webprogtable set title='${newT}' where id= ${req.params.id}`;
 
     let query=db.query(sql,newT,function(err,result){
         if(err){
@@ -100,16 +156,17 @@ app.get('/update/:id',function(req,res){
     });
 });
 
-
-
-app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/client side/client.html");
-    });
-
-app.use('/client side',express.static(__dirname+'/client side'));
+app.use('/client-side',express.static(__dirname+"/client-side"));
 
 var socket_list = {}; 
 var player_list={};
+
+
+app.get("/", function(req, res) {
+    res.sendFile(__dirname + "/client-side/client.html");
+    console.log(__dirname + "/client-side/client.html");
+    });
+
 
 
 var players=function(id){
@@ -122,23 +179,6 @@ var players=function(id){
     }
     return self;
 }
-
-let clients=0;
-io.sockets.on('connection',function(socket){
-    
-    socket.id=Math.random();
-    socket_list[socket.id]=socket;
-
-    var player = players(socket.id);
-    player_list[socket.id]=player;
-    
-    clients++;
-
-    socket.on('disconnect',function(){
-        delete socket_list[socket.id];
-        delete player_list[socket.id];
-    });
-});
 
 
 http.listen(2020,function()
@@ -161,7 +201,7 @@ setInterval(function(){
             var player=socket_list[i];
             player.emit('newPositions',pack);
        }
-        
-       
-    
-},1000/25);
+
+
+
+},1000/25); 
