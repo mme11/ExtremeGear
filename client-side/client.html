@@ -8,24 +8,22 @@
 <body>
 <div id="signDiv">
     <div class="form">
-        <form id="registration"><br>
+        <form action="/auth" method="POST" id="registration"><br>
     Username:<input id="username" type="text" placeholder="Your username"></input><br>
     <br>
     Password:<input id="password" type="password" placeholder="Your password"></input><br>
     <br>
-    <button id="signIn">Sign in</button>
-    <button id ="signUp">Sign up</button>
+    <input type="submit" id="start" value="BEGIN">
         </form>
     </div>
 </div>
 
-
-
-    <div id = 'screen' style="display:none;">
-        <canvas id = "cvs" width="500" height="500" style="border:1px solid #000000"></canvas>
-        <div>hello</div>
-    </div>
-
+<div id = 'screen' style="display:none;">
+    <canvas id = "cvs" width="500" height="500" style="border:1px solid #000000"></canvas>
+    <div id="chat-text" style="width:500px;height:100px;overflow-y:scroll">
+    <div>hello</div>
+</div>
+</div>
 
 
 
@@ -37,35 +35,23 @@
     var signDiv = document.getElementById('signDiv');
     var signDivusername = document.getElementById('username');
     var signDivpassword = document.getElementById('password');
-    var signDivSignIn = document.getElementById('signIn');
-    var signDivSignUp = document.getElementById('signUp');
-    var screen= document.getElementById('screen');
+    var begin = document.getElementById('begin');
 
-    signDivSignIn.onclick = function(){
-        socket.emit('signIn',{username:signDivusername.value,password:signDivpassword.value});
+
+    function myfunction(){
+        socket.emit('begin',{username:signDivusername,password:signDivpassword});
     }
 
-    signDivSignUp.onclick = function(){
-        socket.emit('signUp',{username:signDivusername.value,password:signDivpassword.value});
-    }
+ 
 
-    socket.on('signInResponse',function(data){
+    socket.on('beginResponse',function(data){
         if(data.success){
-            screen.style.display='inline-block';
-            signDiv.style.display='none';
             
-        }
+            }
         else
             alert('Sign in unsuccessful');
     });
 
-    socket.on('signUpResponse',function(data){
-        if(data.success){
-            alert('Sign up successful');
-        }
-        else
-            alert('Sign up unsuccessful');
-    })
 
     socket.on('newPositions',function(data){
         ctx.clearRect(0,0,500,500);
@@ -75,7 +61,7 @@
 
     
 </script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src = 'client-side/main.js'></script>
 </body>
 </html>       

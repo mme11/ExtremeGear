@@ -25,35 +25,25 @@ var addUser = function(data){
 let clients=0;
 io.sockets.on('connection',function(socket){
 
-    socket.on('signIn',function(data){
-        if(isValidPassword(data))
-        {
-            socket.id=Math.random();
-            socket_list[socket.id]=socket;
-                
-            var player = players(socket.id);
-            player_list[socket.id]=player;
-                
-            clients++;
-
-            socket.emit('signInResponse',{success:true});
+    socket.on('begin',function(data){
+        {  console.log("hello");
+            let post={username:data.username,password:data.password,score:0,position:0};
+            let sql='INSERT INTO webprogtable SET ?';
+            let query= db.query(sql,post,function(err,result){
+                if(err){
+                    throw err;
+                }
+            console.log(result);
+            });
+            socket.emit('beginResponse',{success:true});
         }
-        else
+       /* //if it exists
         {
-            socket.emit('signInResponse',{success:false});
-        }
+            socket.emit('beginResponse',{success:false});
+        }*/
           
     });
 
-    socket.on('signUp',function(data){
-        if(isUsernameTaken(data)){
-            socket.emit('signUpResponse',{success:false});
-        }
-        else{
-            addUser(data);
-            socket.emit('signUpResponse',{success:true});
-        }
-    });
 
     socket.on('disconnect',function(){
         delete socket_list[socket.id];
@@ -98,7 +88,7 @@ app.get('/createtable',function(req,res){
 });
 
 app.get('/add1st',function(req,res){
-    let post={title:"post1" , body:"this is post1"};
+    let post={username:"hello",password:"user1",score:0,position:0};
     let sql='INSERT INTO webprogtable SET ?';
     let query= db.query(sql,post,function(err,result){
         if(err){
@@ -164,8 +154,23 @@ var player_list={};
 
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/client-side/client.html");
-    console.log(__dirname + "/client-side/client.html");
     });
+
+app.post('/auth', function (req,res) {
+    var username= req.params.username;
+    var password=req.params.password;
+    console.log("hello");
+    let post={username:username,password:password,score:0,position:0};
+    let sql='INSERT INTO webprogtable SET ?';
+    let query= db.query(sql,post,function(err,result){
+        if(err){
+            throw err;
+        }
+    console.log(result);
+            });
+
+    res.send("success");
+        });
 
 
 
@@ -181,8 +186,10 @@ var players=function(id){
 }
 
 
-http.listen(2020,function()
-{   console.log("Server at 2020");
+http.listen(2020,function(err)
+{   if(err)
+        throw err;
+    console.log("Server at 2020");
 });
 
 setInterval(function(){
