@@ -38,9 +38,7 @@
     var begin = document.getElementById('begin');
 
 
-    function myfunction(){
-        socket.emit('begin',{username:signDivusername,password:signDivpassword});
-    }
+
 
  
 
@@ -53,11 +51,7 @@
     });
 
 
-    socket.on('newPositions',function(data){
-        ctx.clearRect(0,0,500,500);
-        for(var i =0;i<data.length;i++)
-            ctx.fillText(data[i].number,data[i].x,data[i].y);   
-        });
+
 
     
 </script>

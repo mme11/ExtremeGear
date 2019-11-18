@@ -33,9 +33,9 @@ carsize=30;
 var RaceCar= new Image();
 var track= new Image();
 
-RaceCar.src = "images/Blue Tank 3.png";
+RaceCar.src = "client-side/images/Blue Tank 3.png";
 
-track.src="images/newtrack.png";
+track.src="client-side/images/newtrack.png";
 
     function startGame()     //function that is first called [<body onload = "startGame()">]
     {   
