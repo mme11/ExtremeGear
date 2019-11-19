@@ -4,60 +4,24 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http,{}); 
 const mysql = require('mysql');
 
-var users={
-    'hello':'user1',
-    'hello2':'user2',
-    'hello3':'user3'
-}
 
-var isValidPassword = function(data){
-    return users[data.username]=== data.password;
-}
+
+
 
 var isUsernameTaken = function(data){
     return users[data.username];
 }
 
-var addUser = function(data){
-    users[data.username]=data.password;
-}
 
-let clients=0;
-io.sockets.on('connection',function(socket){
+let clients=0;  //number of users
+io.sockets.on('connection',function(socket){    //when a connection is made
 
-    socket.on('signIn',function(data){
-        if(isValidPassword(data))
-        {
-            socket.id=Math.random();
-            socket_list[socket.id]=socket;
-                
-            var player = players(socket.id);
-            player_list[socket.id]=player;
-                
-            clients++;
 
-            socket.emit('signInResponse',{success:true});
-        }
-        else
-        {
-            socket.emit('signInResponse',{success:false});
-        }
-          
-    });
+   
 
-    socket.on('signUp',function(data){
-        if(isUsernameTaken(data)){
-            socket.emit('signUpResponse',{success:false});
-        }
-        else{
-            addUser(data);
-            socket.emit('signUpResponse',{success:true});
-        }
-    });
 
     socket.on('disconnect',function(){
-        delete socket_list[socket.id];
-        delete player_list[socket.id];
+        
     });
 });
 
@@ -68,14 +32,14 @@ const db=mysql.createConnection({
     database :'nodemysql'
 });
 
-db.connect(function(err){
+db.connect(function(err){   //connecting to the database
     if(err){
         throw err;
     }
     console.log("MySQL connected");
 });
 
-app.get('/createdb',function(req,res){
+app.get('/createdb',function(req,res){  //command which wa sused to create database
     let sql='create database nodemysql';
     db.query(sql,function(err,result){
         if(err){
@@ -86,7 +50,7 @@ app.get('/createdb',function(req,res){
     });
 });
 
-app.get('/createtable',function(req,res){
+app.get('/createtable',function(req,res){   //command which was used to create table
     let sql='CREATE TABLE webProgTable(id int AUTO_INCREMENT , username varchar(200), password varchar(250),score int, position int, PRIMARY KEY (id))';
     db.query(sql,function(err,result){
         if(err){
@@ -97,8 +61,8 @@ app.get('/createtable',function(req,res){
     });
 });
 
-app.get('/add1st',function(req,res){
-    let post={title:"post1" , body:"this is post1"};
+/*app.get('/add1st',function(req,res){
+    let post={username:"hello",password:"user1",score:0,position:0};
     let sql='INSERT INTO webprogtable SET ?';
     let query= db.query(sql,post,function(err,result){
         if(err){
@@ -154,54 +118,43 @@ app.get('/update/:id',function(req,res){
     console.log(result);
     res.send('pst1 title changed');
     });
-});
+});*/
 
 app.use('/client-side',express.static(__dirname+"/client-side"));
 
-var socket_list = {}; 
-var player_list={};
 
 
-app.get("/", function(req, res) {
+
+app.get("/", function(req, res) {   //directs to the client.html
     res.sendFile(__dirname + "/client-side/client.html");
-    console.log(__dirname + "/client-side/client.html");
     });
 
+app.post('/auth', function (req,res) {  //when begin is clicked
+    var username= req.param.username;
+    var password=req.param.password;
+    console.log("hello");
+    let post={username:username,password:password,score:0,position:0};
+    let sql='INSERT INTO webprogtable SET ?';
+    let query= db.query(sql,post,function(err,result){
+        if(err){
+            throw err;
+        }
+    console.log(result);
+            });
+    res.sendFile("C:/Users/Aysha Farheen/Documents/GitHub/furry-sadness/client-side/index.html");//file directing to
+                                                                                                //main game
+        });
 
 
-var players=function(id){
-    var self={
-        x:250,
-        y:250,
-        id:id,
-        number:" "+Math.floor(10*Math.random())
-
-    }
-    return self;
-}
 
 
-http.listen(2020,function()
-{   console.log("Server at 2020");
+http.listen(2020,function(err)  //puts the server at 2020
+{   if(err)
+        throw err;
+    console.log("Server at 2020");
 });
 
-setInterval(function(){
-    var pack=[];
-    for (var i in player_list){
-        var player=player_list[i];
-        player.x++;
-        player.y++;
-        pack.push({
-            x:player.x,
-            y:player.y,
-            number:player.number
-        });
-       }
-       for(var i in socket_list){
-            var player=socket_list[i];
-            player.emit('newPositions',pack);
-       }
 
 
 
-},1000/25); 
+
