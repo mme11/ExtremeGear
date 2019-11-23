@@ -8,7 +8,8 @@ cvs.height = window.innerHeight;
 var xpos = 500;
 var ypos =40;
 var boundary=40;
-
+var final=0;
+var socket=io();
 var cameraspeed=0;
 //var boundary_up=ypos+20;
 var dest_width,dest_height;
@@ -22,8 +23,8 @@ var speed = 0;
 var angle=0;
 var moveAngle=0;
 
-room_xview = -3700; 
-room_yview = -3700;  
+room_xview =-3700 ;//-3700 -3550    -3490     -3650  
+room_yview = -3700;//-3700  -3100       
 room_sizex = 10900; 
 room_sizey = 10900; 
 room_width = 9189;  
@@ -39,6 +40,9 @@ track.src="client-side/images/newtrack.png";
 
     function startGame()     //function that is first called [<body onload = "startGame()">]
     {   
+        socket.on('start',function(username){
+            var username=username;
+        });
         myRaceArea.start();
     }   
 
@@ -194,8 +198,11 @@ track.src="client-side/images/newtrack.png";
         
             if (ypos > room_height-40) 
                 ypos = room_height-40;
-
-
+                -3490     -3650 
+            if(room_xview<-3490 && room_xview>-3650 && room_yview<-3100){
+                gameover();
+            }
+            
             //xpos=xpos-room_xview/2;
             //ypos=ypos-room_yview/2;
 
@@ -223,9 +230,11 @@ track.src="client-side/images/newtrack.png";
 
             function updateScore(){
                 score_counter++;
-                if(score_counter%15==0)
+                if(score_counter%15==0){
                     score.text(parseInt(score.text())+1)
+                    final++;
             } 
+        }
 
             /*function update(){
                 dest_width=room_width;
@@ -252,3 +261,8 @@ track.src="client-side/images/newtrack.png";
                
                 ctx.restore(); 
                 }*/
+
+                function gameover(){
+                    socket.emit('score',final,username);
+                }
+                
