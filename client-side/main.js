@@ -34,9 +34,9 @@ carsize=30;
 var RaceCar= new Image();
 var track= new Image();
 
-RaceCar.src = "client-side/images/Blue Tank 3.png";
+RaceCar.src = "images/Blue Tank 3.png";
 
-track.src="client-side/images/newtrack.png";
+track.src="images/newtrack.png";
 
     function startGame()     //function that is first called [<body onload = "startGame()">]
     {   
@@ -136,7 +136,7 @@ track.src="client-side/images/newtrack.png";
 
 
      function draw(){        //draws racetrack and car
-        updateRaceArea();
+        check();
        ctx.drawImage(track,room_xview,room_yview,room_sizex,room_sizey);//10900,10900
         ctx.drawImage(RaceCar,xpos,ypos,carsize,carsize);
         requestAnimationFrame(draw);
@@ -173,6 +173,20 @@ track.src="client-side/images/newtrack.png";
     }
            
 
+        
+        // Checks the center of the map for boundaries
+        
+        function check()
+        {
+            var colordata = ctx.getcolordata(xpos,ypos,1,1)
+            var hex = "#" + ("000000" + rgbToHex(colordata[0], colordata[1], colordata[2])).slice(-6);
+            if ( colordata[0], colordata[1], colordata[2] == 15 , 189 , 52) {
+                return false
+            }
+            else {
+                updateRaceArea()
+            }
+        }
         //updates position of sprite 
         function newPos()
         {
