@@ -18,12 +18,7 @@
     </div>
 </div>
 
-<div id = 'screen' style="display:none;">
-    <canvas id = "cvs" width="500" height="500" style="border:1px solid #000000"></canvas>
-    <div id="chat-text" style="width:500px;height:100px;overflow-y:scroll">
-    <div>hello</div>
-</div>
-</div>
+
 
 
 
@@ -31,32 +26,11 @@
 </script>
 <script>
     var socket=io();
-
-    var signDiv = document.getElementById('signDiv');
-    var signDivusername = document.getElementById('username');
-    var signDivpassword = document.getElementById('password');
-    var begin = document.getElementById('begin');
-
-
-
-
- 
-
-    socket.on('beginResponse',function(data){
-        if(data.success){
-            
-            }
-        else
-            alert('Sign in unsuccessful');
-    });
-
-
-
-
     
 </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src = 'client-side/main.js'></script>
 </body>
 </html>       
+
 
