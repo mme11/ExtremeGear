@@ -66,7 +66,17 @@ track.src="client-side/images/newtrack.png";
 
    
 }
+
        
+
+function draw(){        //draws racetrack and car
+    check();
+   ctx.drawImage(track,room_xview,room_yview,room_sizex,room_sizey);//10900,10900
+    ctx.drawImage(RaceCar,xpos,ypos,carsize,carsize);
+    requestAnimationFrame(draw);
+    //updateRaceArea();
+    }       
+
 
     //clears area for the next sprite to be drawn and then assigns values to move angle or speed according to key press. It then calls newpos() and update()
       function updateArea() {        
@@ -97,6 +107,20 @@ track.src="client-side/images/newtrack.png";
     }
            
 
+        
+        // Checks the center of the map for boundaries
+        
+        function check()
+        {
+            var colordata = ctx.getcolordata(xpos,ypos,1,1)
+            var hex = "#" + ("000000" + rgbToHex(colordata[0], colordata[1], colordata[2])).slice(-6);
+            if ( colordata[0], colordata[1], colordata[2] == 15 , 189 , 52) {
+                return false
+            }
+            else {
+                updateRaceArea()
+            }
+        }
         //updates position of sprite 
         function newPos()
         {
