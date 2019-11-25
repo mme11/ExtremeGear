@@ -33,9 +33,9 @@ carsize=30;
 var RaceCar= new Image();
 var track= new Image();
 
-RaceCar.src = "images/Blue Tank 3.png";
+RaceCar.src = "client-side/images/Blue Tank 3.png";
 
-track.src="images/newtrack.png";
+track.src="client-side/images/newtrack.png";
 
     function startGame()     //function that is first called [<body onload = "startGame()">]
     {   
@@ -66,82 +66,13 @@ track.src="images/newtrack.png";
 
    
 }
-<<<<<<< aysha
-=======
-
-/*class Cars
-{
-    constructor()
-    {
-    this.speed=speed;
-    this.moveAngle=moveAngle;
-    this.width=50;
-    this.height=50;
-    this.x=xpos;
-    this.y=ypos;
-    this.angle=angle;
-    }
-
-    draw(){        //draws racetrack and car
-        this.updateRaceArea();
-       ctx.drawImage(track,-3700,-3700,10900,10900);
-        ctx.drawImage(RaceCar,this.x,this.y,this.width,this.height);
-        requestAnimationFrame(this.draw);
-        }
-
-
-        //clears area for the next sprite to be drawn and then assigns values to move angle or speed according to key press. It then calls newpos() and update()
-        updateRaceArea() {        
-            ctx.clearRect(this.x,this.y,this.width,this.height);
-            if(myRaceArea.keys)
-            {
-                if (myRaceArea.keys[37]) {this.moveAngle = 1; }
-                if (myRaceArea.keys[39]) {this.moveAngle = -1; }
-                if (myRaceArea.keys[38]) {this.speed= 1; }
-                if (myRaceArea.keys[40]) {this.speed= -1; }
-            }
-            
-            newPos();
-            update();
-        }
-
-
-         //updates position of sprite 
-         newPos(){
-
-           
-            this.angle += this.moveAngle * (Math.PI / 180) ;
-          
-            this.x += this.speed * Math.sin(this.angle);
-            this.y -= this.speed * Math.cos(this.angle);
-
-    
-           }
-        
-      
-        //saves current state of canvas and then draws the sprite in the updated position
-        update(){
-            ctx.save();
-            ctx.translate(this.x,this.y);
-            ctx.rotate(this.angle);
-            ctx.drawImage(RaceCar, this.width/-2 , this.height/-2 , this.width, this.width);
-    
-            ctx.restore(); 
-            }
-    
-}*/
-
-
-
-     function draw(){        //draws racetrack and car
-        check();
-       ctx.drawImage(track,room_xview,room_yview,room_sizex,room_sizey);//10900,10900
-        ctx.drawImage(RaceCar,xpos,ypos,carsize,carsize);
-        requestAnimationFrame(draw);
-        //updateRaceArea();
-        }
->>>>>>> master
-       
+function draw(){        //draws racetrack and car
+    check();
+   ctx.drawImage(track,room_xview,room_yview,room_sizex,room_sizey);//10900,10900
+    ctx.drawImage(RaceCar,xpos,ypos,carsize,carsize);
+    requestAnimationFrame(draw);
+    //updateRaceArea();
+    }       
 
     //clears area for the next sprite to be drawn and then assigns values to move angle or speed according to key press. It then calls newpos() and update()
       function updateArea() {        
