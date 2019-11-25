@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>  
+        
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="client-side/clientstyle.css">
+    </head>
+<body>
+<div id="signDiv">
+    <div class="form">
+        <form action="/auth" method="POST" id="registration"><br>
+    Username:<input id="username" type="text" name="username" placeholder="Your username"required></input><br>
+    <br>
+    Password:<input id="password" type="password" name="password" placeholder="Your password"required></input><br>
+    <br>
+    <input type="submit" id="start" value="BEGIN"> 
+        </form>
+    </div>
+</div>
+
+<div id = 'screen' style="display:none;">
+    <canvas id = "cvs" width="500" height="500" style="border:1px solid #000000"></canvas>
+    <div id="chat-text" style="width:500px;height:100px;overflow-y:scroll">
+    <div>hello</div>
+</div>
+</div>
+
+
+
+<script src ="https://cdn.socket.io/socket.io-1.4.5.js">
+</script>
+<script>
+    var socket=io();
+
+    var signDiv = document.getElementById('signDiv');
+    var signDivusername = document.getElementById('username');
+    var signDivpassword = document.getElementById('password');
+    var begin = document.getElementById('begin');
+
+
+
+
+ 
+
+    socket.on('beginResponse',function(data){
+        if(data.success){
+            
+            }
+        else
+            alert('Sign in unsuccessful');
+    });
+
+
+
+
+    
+</script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src = 'client-side/main.js'></script>
+</body>
+</html>       
+
